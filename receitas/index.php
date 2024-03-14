@@ -85,6 +85,7 @@ if (!$receita || curl_errno($ch)) {
     $(document).ready(function() {
         $('.imprimirReceitaBtn').click(function() {
             var receita = $(this).data('receita');
+            var receitaTitulo = `Receita${receita._id}${receita.atendimentoRef.pacienteId.nome}`;
 
             var iframe = document.createElement('iframe');
             iframe.style.display = 'none';
@@ -98,17 +99,20 @@ if (!$receita || curl_errno($ch)) {
 
 
             iframe.onload = function() {
-                var html = '<h2>Detalhes da Receita</h2>';
-                html += '<p><strong>Paciente:</strong> ' + receita.atendimentoRef.pacienteId.nome + '</p>';
-                html += '<p><strong>Médico:</strong> ' + receita.atendimentoRef.medicoId.nome + '</p>';
-                html += '<p><strong>Data Início:</strong> ' + dataInicio.toLocaleDateString('pt-BR', options) + '</p>';
-                html += '<p><strong>Data Fim:</strong> ' + dataFim.toLocaleDateString('pt-BR', options) + '</p>';
-                html += '<h3>Medicamentos:</h3><ul>';
-                receita.medicamentos.forEach(function(medicamento) {
-                    html += '<li>' + medicamento.nome + ' - Quantidade: ' + medicamento.quantidade + ' - Período: ' + medicamento.periodo + '</li>';
-                });
-                html += '</ul>';
-                html += '<p><strong>Observações:</strong> ' + receita.observacoes + '</p>';
+                var html = `
+                    <h2>Detalhes da Receita</h2>
+                    <p><strong>Paciente:</strong> ${receita.atendimentoRef.pacienteId.nome}</p>
+                    <p><strong>Médico:</strong> ${receita.atendimentoRef.medicoId.nome}</p>
+                    <p><strong>Data Início:</strong> ${dataInicio.toLocaleDateString('pt-BR', options)}</p>
+                    <p><strong>Data Fim:</strong> ${dataFim.toLocaleDateString('pt-BR', options)}</p>
+                    <h3>Medicamentos:</h3>
+                    <ul>
+                        ${receita.medicamentos.map(function(medicamento) {
+                            return `<li>${medicamento.nome} | Quantidade: ${medicamento.quantidade} | Período: ${medicamento.periodo}</li>`;
+                        }).join('')}
+                    </ul>
+                    <p><strong>Observações:</strong> ${receita.observacoes}</p>
+                `;
 
                 var doc = iframe.contentWindow.document;
                 doc.open();

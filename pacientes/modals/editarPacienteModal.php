@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editarPacienteForm" method="POST" action="atualizar_paciente.php">
+                <form id="editarPacienteForm" method="POST">
                     <div class="form-group">
                         <label for="pacienteNome">Nome</label>
                         <input type="text" class="form-control" id="pacienteNome" name="nome">
@@ -76,6 +76,7 @@
                         <label for="pacienteComorbidades">Comorbidades</label>
                         <select class="form-control" id="pacienteComorbidades" name="comorbidades">
                             <option value="">Selecione uma comorbidade</option>
+                            <option value="Nenhuma">Nenhuma</option>
                             <option value="Asma">Asma</option>
                             <option value="Diabetes">Diabetes</option>
                             <option value="Hipertensão">Hipertensão</option>

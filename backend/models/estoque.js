@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Definição do esquema Estoque
+// Definição do esquema Estoque.
 const estoqueSchema = new Schema({
   nome: { type: String, required: true },
   codigo: { type: String, required: true },

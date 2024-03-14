@@ -82,41 +82,6 @@ if (!$pacientes || curl_errno($ch)) {
     require './modals/adicionarPacienteModal.php'
     ?>
 
-    <!-- Modal de Edição de paciente -->
-    <div class="modal fade" id="editarPacienteModal" tabindex="-1" role="dialog" aria-labelledby="editarPacienteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editarpacienteModalLabel">Editar Paciente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="editarPacienteForm" method="POST" action="atualizar_paciente.php">
-                        <div class="form-group">
-                            <label for="pacienteNome">Nome</label>
-                            <input type="text" class="form-control" id="pacienteNome" name="nome">
-                        </div>
-                        <div class="form-group">
-                            <label for="pacienteEmail">Email</label>
-                            <input type="email" class="form-control" id="pacienteEmail" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="pacienteTelefone">Telefone</label>
-                            <input type="text" class="form-control" id="pacienteTelefone" name="telefone">
-                        </div>
-                        <input type="hidden" id="pacienteId" name="id">
-
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-danger" id="excluirpaciente">Excluir paciente</button>
-                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
      $(document).ready(function() {
       $('.editarPacienteBtn').on('click', function() {
@@ -164,6 +129,36 @@ if (!$pacientes || curl_errno($ch)) {
           $('#pacienteNacionalidade').val(nacionalidade);
           $('#pacienteProfissao').val(profissao);
       });
+
+      $('#adicionarPacienteForm').submit(function(event) {
+            var formData = $(this).serializeArray(); // Obtém os dados do formulário como um array
+
+            var jsonData = {};
+            // Converta o array de dados em um objeto JavaScript
+            $.each(formData, function() {
+                jsonData[this.name] = this.value;
+            });
+
+            console.log('Dados enviados para a API:', jsonData); // Registra os dados enviados no console
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:3001/pacientes/criar',
+                contentType: 'application/json', // Define o tipo de conteúdo como JSON
+                data: JSON.stringify(jsonData), // Converte os dados para JSON
+                success: function(response) {
+                    console.log('Paciente criado com sucesso:', response);
+                    // Limpar o formulário ou fazer outras ações, se necessário
+                    $('#adicionarPacienteModal').modal('hide'); // Fecha o modal após o sucesso
+                    location.reload(); // Recarrega a página para exibir o novo paciente adicionado
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erro ao criar paciente:', error);
+                    // Exibir mensagem de erro ao usuário ou outras ações, se necessário
+                }
+            });
+        });
+
 
 
       function excluirPaciente() {
@@ -280,21 +275,6 @@ $(document).ready(function() {
     });
  
     });
-
-    // $('#filtroTexto').on('input', function() {
-    //     var filtroTexto = $(this).val().toLowerCase();
-    //     $('#tabelaEstoque tr').each(function() {
-    //         var nome = $(this).find('td:nth-child(1)').text().toLowerCase();
-    //         var codigo = $(this).find('td:nth-child(2)').text().toLowerCase();
-    //         if (nome.includes(filtroTexto) || codigo.includes(filtroTexto)) {
-    //             $(this).show();
-    //         } else {
-    //             $(this).hide();
-    //         }
-    //     });
-    // });
-
-
     </script>
 
 

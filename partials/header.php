@@ -18,6 +18,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/pacientes/">Pacientes</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/receitas/">Receitas</a>
+            </li>
         </ul>
     </div>
 </nav>

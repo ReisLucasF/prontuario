@@ -9,18 +9,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="adicionarPacienteForm" method="POST" action="inserir_paciente.php">
+                <form id="adicionarPacienteForm" method="POST">
                     <div class="form-group">
                         <label for="novopacienteNome">Nome</label>
                         <input type="text" class="form-control" id="novopacienteNome" name="nome" required>
                     </div>
                     <div class="form-group">
                         <label for="novopacienteNomeMae">Nome da Mãe</label>
-                        <input type="text" class="form-control" id="novopacienteNomeMae" name="nome_mae" required>
+                        <input type="text" class="form-control" id="novopacienteNomeMae" name="nomeDaMae" required>
                     </div>
                     <div class="form-group">
                         <label for="novopacienteDataNascimento">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="novopacienteDataNascimento" name="data_nascimento" required>
+                        <input type="date" class="form-control" id="novopacienteDataNascimento" name="dataNascimento" required>
                     </div>
                     <div class="form-group">
                         <label for="novopacienteSexo">Sexo</label>
@@ -37,6 +37,16 @@
                     <div class="form-group">
                         <label for="novopacientePec">Número do PEC</label>
                         <input type="text" class="form-control" id="novopacientePec" name="pec">
+                    </div>
+                    <div class="form-group">
+                        <label for="cepInput">CEP:</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="cepInput"
+                            placeholder="Digite o CEP"
+                            name="cep"
+                        />
                     </div>
                     <div class="form-group">
                         <label for="novopacienteLogradouro">Logradouro</label>
@@ -76,6 +86,7 @@
                         <label for="novopacienteComorbidades">Comorbidades</label>
                         <select class="form-control" id="novopacienteComorbidades" name="comorbidades">
                             <option value="">Selecione uma comorbidade</option>
+                            <option value="Nenhuma">Nenhuma</option>
                             <option value="Asma">Asma</option>
                             <option value="Diabetes">Diabetes</option>
                             <option value="Hipertensão">Hipertensão</option>
@@ -102,7 +113,7 @@
                     </div>
                     <div class="form-group">
                         <label for="novopacienteEstadoCivil">Estado civil</label>
-                        <select class="form-control" id="novopacienteEstadoCivil" name="estado_civil">
+                        <select class="form-control" id="novopacienteEstadoCivil" name="estadoCivil">
                             <option value="">Selecione o estado civil</option>
                             <option value="Solteiro">Solteiro</option>
                             <option value="Casado">Casado</option>
@@ -117,6 +128,10 @@
                         <label for="novopacienteProfissao">Profissão</label>
                         <input type="text" class="form-control" id="novopacienteProfissao" name="profissao">
                     </div>
+                    <div class="form-group">
+                        <label for="novopacienteSenha">Senha</label>
+                        <input type="password" class="form-control" id="novopacienteSenha" name="senha">
+                    </div>
                     <!-- Adicione mais campos conforme necessário -->
 
                 </form>
@@ -128,3 +143,48 @@
         </div>
     </div>
 </div>
+
+<script>
+      function buscarEnderecoPorCep() {
+        const cep = document
+          .getElementById("cepInput")
+          .value.trim()
+          .replace("-", "");
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then((response) => response.json())
+          .then((data) => {
+            // Se rolar algum erro
+            if (data.erro) {
+              // Limpa
+              document.getElementById("novopacienteLogradouro").value = "";
+              document.getElementById("novopacienteBairro").value = "";
+              document.getElementById("novopacienteCidade").value = "";
+              document.getElementById("novopacienteEstado").value = "";
+            } else {
+              // Preencher
+              document.getElementById("novopacienteLogradouro").value =
+                data.logradouro;
+              document.getElementById("novopacienteBairro").value = data.bairro;
+              document.getElementById("novopacienteCidade").value =
+                data.localidade;
+              document.getElementById("novopacienteEstado").value = data.uf;
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao obter dados do CEP:", error);
+            alert(
+              "Ocorreu um erro ao obter os dados do CEP. Por favor, tente novamente."
+            );
+          });
+      }
+
+      document
+        .getElementById("cepInput")
+        .addEventListener("input", function () {
+          const cep = this.value.replace("-", "");
+          if (cep.length === 8) {
+            buscarEnderecoPorCep();
+          }
+        });
+    </script>

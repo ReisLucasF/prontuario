@@ -35,4 +35,17 @@ router.post('/', async (req, res) => {
     }
 });
 
+// DELETE
+router.delete('/excluir/:id', async (req, res) => {
+  try {
+    const receita = await ReceitaMedica.findByIdAndDelete(req.params.id);
+    if (!receita) {
+      return res.status(404).json({ message: "Receita não encontrada." });
+    }
+    res.json({ message: "Receita excluída com sucesso." });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;

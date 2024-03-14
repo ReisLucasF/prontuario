@@ -23,5 +23,5 @@ app.use('/receita', receitaRoutes);
 const PORT = 3001;
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta http://localhost:${PORT}`);
+  console.log(`API rodando na porta http://localhost:${PORT}\n\nPara pausar a API, pressione Ctrl + C`);
 });

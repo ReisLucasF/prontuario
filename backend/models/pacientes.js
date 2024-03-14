@@ -8,6 +8,7 @@ const pacienteSchema = new Schema({
   sexo: { type: String, enum: ['Masculino', 'Feminino'], required: true },
   sus: { type: Number, default: null },
   pec: { type: String, default: null },
+  cep: { type: Number, default: null },
   logradouro: { type: String, default: null },
   bairro: { type: String, default: null },
   numero: { type: String, default: null },
@@ -23,7 +24,7 @@ const pacienteSchema = new Schema({
   estadoCivil: { type: String, default: null },
   nacionalidade: { type: String, default: null },
   profissao: { type: String, default: null },
-  senha: { type: String, required: true }
+  senha: { type: String, default: 123456 }
 });
 
 module.exports = mongoose.model('Paciente', pacienteSchema);

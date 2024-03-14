@@ -75,7 +75,7 @@ router.get('/disponiveis', async (req, res) => {
     const medicamentos = await Estoque.find({ quantidade: { $gt: 0 } });
     res.json(medicamentos);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message }); 
   }
 });
 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta de Endereço por CEP</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Consulta de Endereço por CEP</h2>
+          <form id="cepForm">
+            <div class="form-group">
+              <label for="cepInput">CEP:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="cepInput"
+                placeholder="Digite o CEP"
+              />
+            </div>
+            <div class="form-group">
+              <label for="logradouroInput">Logradouro:</label>
+              <input type="text" class="form-control" id="logradouroInput" />
+            </div>
+            <div class="form-group">
+              <label for="bairroInput">Bairro:</label>
+              <input type="text" class="form-control" id="bairroInput" />
+            </div>
+            <div class="form-group">
+              <label for="localidadeInput">Localidade:</label>
+              <input type="text" class="form-control" id="localidadeInput" />
+            </div>
+            <div class="form-group">
+              <label for="ufInput">UF:</label>
+              <input type="text" class="form-control" id="ufInput" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+      function buscarEnderecoPorCep() {
+        const cep = document
+          .getElementById("cepInput")
+          .value.trim()
+          .replace("-", "");
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then((response) => response.json())
+          .then((data) => {
+            // Se rolar algum erro
+            if (data.erro) {
+              // Limpa
+              document.getElementById("logradouroInput").value = "";
+              document.getElementById("bairroInput").value = "";
+              document.getElementById("localidadeInput").value = "";
+              document.getElementById("ufInput").value = "";
+            } else {
+              // Preencher
+              document.getElementById("logradouroInput").value =
+                data.logradouro;
+              document.getElementById("bairroInput").value = data.bairro;
+              document.getElementById("localidadeInput").value =
+                data.localidade;
+              document.getElementById("ufInput").value = data.uf;
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao obter dados do CEP:", error);
+            alert(
+              "Ocorreu um erro ao obter os dados do CEP. Por favor, tente novamente."
+            );
+          });
+      }
+
+      document
+        .getElementById("cepInput")
+        .addEventListener("input", function () {
+          const cep = this.value.replace("-", "");
+          if (cep.length === 8) {
+            buscarEnderecoPorCep();
+          }
+        });
+    </script>
+  </body>
+</html>

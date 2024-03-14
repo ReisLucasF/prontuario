@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 router.get('/medico/:medicoId', async (req, res) => {
     const medicoId = req.params.medicoId;
     try {
-        const receitas = await ReceitaMedica.find({ medicoId });
+        const receitas = await ReceitaMedica.find({ 'atendimentoRef.medicoId': medicoId });
         res.json(receitas);
     } catch (error) {
         res.status(500).json({ error: error.message });

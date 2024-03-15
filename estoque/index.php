@@ -1,11 +1,21 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+// Obtém a chave da API do ambiente
+$apiKey = $_ENV['API_KEY'];
+
 include '../partials/header.php';
+
 
 $ch = curl_init();
 
 curl_setopt($ch, CURLOPT_URL, "http://localhost:3001/estoque");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HEADER, false);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    "x-api-key: $apiKey"
+));
 
 $resposta = curl_exec($ch);
 

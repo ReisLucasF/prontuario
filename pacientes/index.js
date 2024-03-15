@@ -22,6 +22,7 @@ $(document).ready(function() {
         var nacionalidade = $(this).data('nacionalidade');
         var profissao = $(this).data('profissao');
 
+        $('#id').text(id);
         $('#visualizarNome').text(nome);
         $('#visualizarDataNascimento').text(dataNascimento);
         $('#visualizarSexo').text(sexo);

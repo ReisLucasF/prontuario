@@ -12,14 +12,20 @@ const AtendimentoSchema = new Schema({
     default: false
   },
   medico: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Types.ObjectId,
     ref: 'Usuario',
-    required: true
+    required: true,
+    autopopulate: true
+  },
+  data: {
+    type: Date,
+    default: Date.now
   },
   paciente: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Types.ObjectId,
     ref: 'Paciente',
-    required: true
+    required: true,
+    autopopulate: true
   }
 });
 
@@ -39,5 +45,6 @@ AtendimentoSchema.virtual('nomePaciente', {
 
 AtendimentoSchema.set('toObject', { virtuals: true });
 AtendimentoSchema.set('toJSON', { virtuals: true });
+AtendimentoSchema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('Atendimento', AtendimentoSchema);

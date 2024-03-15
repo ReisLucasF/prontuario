@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta CIAP</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="codigoInput">Código CIAP:</label>
+            <input type="text" class="form-control" id="codigoInput" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="nomeSelect">Nome CIAP:</label>
+            <select class="form-control" id="nomeSelect">
+              <option value="">Selecione uma doença CIAP</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS e jQuery (opcional, caso você deseje usar funcionalidades específicas do Bootstrap que necessitam de JavaScript) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script personalizado -->
+    <script>
+      // Carrega os dados CID do arquivo JavaScript externo
+      fetch("cids.js")
+        .then((response) => response.json())
+        .then((data) => {
+          // Popula o select com os nomes das doenças CID
+          const selectElement = document.getElementById("nomeSelect");
+          data.forEach((cid) => {
+            const option = document.createElement("option");
+            option.text = cid.nome;
+            option.value = cid.codigo;
+            selectElement.appendChild(option);
+          });
+
+          // Event listener para atualizar o código CID quando uma doença CID é selecionada
+          selectElement.addEventListener("change", function () {
+            const codigoInput = document.getElementById("codigoInput");
+            const selectedOption =
+              selectElement.options[selectElement.selectedIndex];
+            codigoInput.value = selectedOption.value;
+          });
+
+          // Event listener para atualizar a doença CID quando um código CID é digitado
+          const codigoInput = document.getElementById("codigoInput");
+          codigoInput.addEventListener("input", function () {
+            const codigo = codigoInput.value;
+            const selectedOption = Array.from(selectElement.options).find(
+              (option) => option.value === codigo
+            );
+            if (selectedOption) {
+              selectElement.value = selectedOption.value;
+            }
+          });
+        });
+    </script>
+  </body>
+</html>

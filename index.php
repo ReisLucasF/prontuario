@@ -4,7 +4,6 @@ require './conexao.php';
 
 include 'partials/header.php';
 
-$conexao = obterConexao();
 
 require './vendor/autoload.php';
 

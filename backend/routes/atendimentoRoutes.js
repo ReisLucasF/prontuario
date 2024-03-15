@@ -14,6 +14,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Listar todas as atendimentos médicos de um paciente específico por ID
+router.get('/paciente/:pacienteId', async (req, res) => {
+    const pacienteId = req.params.pacienteId;
+    try {
+        const atendimentos = await Atendimento.find({ 'paciente': pacienteId });
+        res.json(atendimentos);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Criar um novo atendimento
 router.post('/', async (req, res) => {
   try {

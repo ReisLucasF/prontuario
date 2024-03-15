@@ -12,6 +12,10 @@
                 <dl class="row">
                     <dt class="col-sm-3">Nome:</dt>
                     <dd class="col-sm-9" id="visualizarNome"></dd>
+
+                    <dt class="col-sm-3" id="idLabel" style="display: none;">Id:</dt>
+                    <dd class="col-sm-9" id="id" style="display: none;"></dd>
+
                     
                     <dt class="col-sm-3">Nome da Mãe:</dt>
                     <dd class="col-sm-9" id="visualizarNomeMae"></dd>
@@ -72,8 +76,22 @@
                 </dl>
             </div>
             <div class="modal-footer">
+                <a id="btnVisualizarAtendimentos" class="btn btn-primary">Visualizar Atendimentos</a>
+
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Adiciona um evento de clique ao botão "Visualizar Atendimentos"
+    document.getElementById('btnVisualizarAtendimentos').addEventListener('click', function () {
+        // Obtém o ID do paciente atualmente visualizado
+        const pacienteId = document.getElementById('id').textContent;
+        // Redireciona para a página de atendimentos com o ID do paciente incluído no URL
+        window.location.href = `atendimentos.php?pacienteId=${pacienteId}`;
+    });
+</script>
+
+

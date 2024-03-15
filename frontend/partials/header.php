@@ -13,13 +13,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/estoque/">Estoque</a>
+                <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/frontend/estoque/">Estoque</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/pacientes/">Pacientes</a>
+                <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/frontend/pacientes/">Pacientes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/receitas/">Receitas</a>
+                <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/frontend/receitas/">Receitas</a>
             </li>
         </ul>
     </div>

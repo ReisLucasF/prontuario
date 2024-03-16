@@ -22,6 +22,7 @@ const pacienteRoutes = require('./routes/pacientesRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const atendimentoRoutes = require('./routes/atendimentoRoutes');
 const receitaRoutes = require('./routes/receitaRoutes');
+const solicitacaoExameRoutes = require('./routes/solicitacaoexameRoute');
 
 app.use(morgan('dev'));
 app.use(express.json()); 
@@ -32,6 +33,7 @@ app.use('/pacientes', pacienteRoutes);
 app.use('/usuarios', usuarioRoutes);
 app.use('/atendimentos', atendimentoRoutes);
 app.use('/receita', receitaRoutes);
+app.use('/solicitacaoExames', solicitacaoExameRoutes);
 
 const PORT = 3001;
 

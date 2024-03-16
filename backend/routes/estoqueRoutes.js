@@ -14,15 +14,35 @@ router.post('/medicamentos/multiplos', async (req, res) => {
 });
 
 // POST
+// router.post('/medicamentos', async (req, res) => {
+//     try {
+//         const novoMedicamento = new Estoque(req.body);
+//         await novoMedicamento.save();
+//         res.status(201).send({ message: 'Medicamento adicionado com sucesso!' });
+//     } catch (error) {
+//         res.status(400).send({ error: 'Falha ao adicionar medicamento', details: error });
+//     }
+// });
+
 router.post('/medicamentos', async (req, res) => {
+    const { nome, codigo } = req.body;
+
     try {
+        const medicamentoExistente = await Estoque.findOne({ $or: [{ nome }, { codigo }] });
+
+        if (medicamentoExistente) {
+            return res.status(400).send({ message: 'Medicamento já existe no banco de dados.' });
+        }
+
         const novoMedicamento = new Estoque(req.body);
         await novoMedicamento.save();
         res.status(201).send({ message: 'Medicamento adicionado com sucesso!' });
+
     } catch (error) {
         res.status(400).send({ error: 'Falha ao adicionar medicamento', details: error });
     }
 });
+
 
 
 // LIST

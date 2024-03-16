@@ -166,7 +166,146 @@ if (!$estoque || curl_errno($ch)) {
   </div>
 </div>
 
+<!-- Modal de Erro -->
+<div class="modal fade" id="erroModal" tabindex="-1" aria-labelledby="erroModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="erroModalLabel">Erro ao Adicionar Medicamento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="mensagemErro"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
+    $('#filtro').change(function() {
+        var filtro = $(this).val();
+        var filtroTexto = $('#filtroTexto').val(); 
+        window.location.href = 'index.php?filtro=' + filtro + '&filtroTexto=' + filtroTexto;
+    });
+
+    $('#filtroTexto').on('input', function() {
+        var filtroTexto = $(this).val().toLowerCase();
+        $('#tabelaEstoque tr').each(function() {
+            var nome = $(this).find('td:nth-child(1)').text().toLowerCase();
+            var codigo = $(this).find('td:nth-child(2)').text().toLowerCase();
+            if (nome.includes(filtroTexto) || codigo.includes(filtroTexto)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
+    
+    $('#excluirMedicamento').click(function() {
+        var id = $('#editarIdMedicamento').val();
+        console.log(id)
+
+        $.ajax({
+            url: 'http://localhost:3001/estoque/excluir/' + id,
+            method: 'DELETE', 
+            headers: {
+                'x-api-key': '<?php echo $apiKey; ?>'
+            },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+            }
+        });
+    });    
+
+    $(document).ready(function() {
+        $('.editarMedicamentoBtn').click(function() {
+            var id = $(this).data('id');
+            var nome = $(this).data('nome');
+            var codigo = $(this).data('codigo');
+            var preco = $(this).data('preco');
+            var quantidade = $(this).data('quantidade');
+
+            $('#editarIdMedicamento').val(id);
+            $('#editarNomeMedicamento').val(nome);
+            $('#editarCodigoMedicamento').val(codigo);
+            $('#editarPrecoMedicamento').val(preco);
+            $('#editarQuantidadeMedicamento').val(quantidade);
+        });
+
+        $('#salvarEdicaoMedicamento').click(function() {
+        var id = $('#editarIdMedicamento').val();
+        var nome = $('#editarNomeMedicamento').val();
+        var codigo = $('#editarCodigoMedicamento').val();
+        var preco = $('#editarPrecoMedicamento').val();
+        var quantidade = $('#editarQuantidadeMedicamento').val();
+
+        $.ajax({
+            url: `http://localhost:3001/estoque/medicamento/${id}`, // Ajuste a URL conforme necessário
+            method: 'PUT', // Método HTTP apropriado para atualizações
+                headers: {
+                'x-api-key': '<?php echo $apiKey; ?>'
+            },
+            contentType: "application/json",
+            data: JSON.stringify({
+                nome: nome,
+                codigo: codigo,
+                preco: preco,
+                quantidade: quantidade
+            }),
+            success: function(response) {
+                window.location.reload();
+            },
+            error: function(xhr, status, error) {
+            }
+        });
+    });
+    });
+
+$('#salvarMedicamento').on('click', function() {
+    var dados = {
+        nome: $('#nomeMedicamento').val(),
+        codigo: $('#codigoMedicamento').val(),
+        preco: $('#precoMedicamento').val(),
+        quantidade: $('#quantidadeMedicamento').val(),
+    };
+
+    $.ajax({
+        url: 'http://localhost:3001/estoque/medicamentos',
+        type: 'POST',
+        headers: {
+            'x-api-key': '<?php echo $apiKey; ?>'
+        },
+        contentType: 'application/json',
+        data: JSON.stringify(dados),
+        success: function(response) {
+            window.location.reload();
+        },
+        error: function(xhr) {
+            try {
+                var resposta = JSON.parse(xhr.responseText);
+                var mensagemErro = resposta.message;
+                $('#mensagemErro').text(mensagemErro);
+            } catch(e) {
+                $('#mensagemErro').text("Ocorreu um erro desconhecido ao adicionar o Medicamento.");
+            }
+
+            $('#erroModal').modal('show');
+        }
+    });
+});
+
+
+    
+
     $('#filtro').change(function() {
         var filtro = $(this).val();
         var filtroTexto = $('#filtroTexto').val(); 
@@ -191,7 +330,6 @@ if (!$estoque || curl_errno($ch)) {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="index.js"></script>
 
 
 </body>

@@ -1,3 +1,5 @@
 @echo off
 cd backend
-nodemon server.js
+start nodemon server.js
+start http://localhost/prontuario/frontend
+

@@ -154,25 +154,66 @@ include '../partials/header.php';
         }
     });
 
-    function visualizarAtendimento(atendimentoId) {
-        $.ajax({
-            url: `http://localhost:3001/atendimentos/paciente/${atendimentoId}`,
-            type: 'GET',
-            headers: {
-                'x-api-key': '<?php echo $apiKey; ?>'
-            },
-            success: function(data) {
-                $('#detalhesAtendimento').html(data);
-                console.log('Abrindo modal...');
+function visualizarAtendimento(atendimentoId) {
+    console.log(atendimentoId);
+    $.ajax({
+        url: `http://localhost:3001/atendimentos/${atendimentoId}`,
+        type: 'GET',
+        headers: {
+            'x-api-key': '<?php echo $apiKey; ?>'
+        },
+        success: function(data) {
+            var atendimento = data[0]; // buscando pelo Id do atendiemento
+
+            if (atendimento) { 
+                var nomeMedico = atendimento.medico ? atendimento.medico.nome : 'Não informado';
+                var crmMedico = atendimento.medico ? atendimento.medico.crm : 'Não informado';
+                var nomePaciente = atendimento.paciente ? atendimento.paciente.nome : 'Não informado';
+                var sexoPaciente = atendimento.paciente ? atendimento.paciente.sexo : 'Não informado';
+                var susPaciente = atendimento.paciente ? atendimento.paciente.sus : 'Não informado';
+                var enderecoPaciente = atendimento.paciente ? `${atendimento.paciente.logradouro}, ${atendimento.paciente.numero} <br> ${atendimento.paciente.bairro} <br> ${atendimento.paciente.cidade} / ${atendimento.paciente.estado}` : 'Não informado';
+
+                if ($('#dadosMedico').length) {
+                    $('#dadosMedico').html(
+                        `<h5>Dados do médico</h5>
+                        <p>Nome: ${nomeMedico}</p>
+                        <p>CRM: ${crmMedico}</p>`
+                    );
+                }
+
+                if ($('#dadosPaciente').length) {
+                    $('#dadosPaciente').html(
+                        `<h5>Dados do paciente</h5>
+                        <p>Nome: ${nomePaciente}</p>
+                        <p>SUS: ${susPaciente}</p>
+                        <p>Sexo: ${sexoPaciente}</p>
+                        <p>Endereço: ${enderecoPaciente}</p>`
+                    );
+                }
+
+                if ($('#descricaoAtendimento').length) {
+                    $('#descricaoAtendimento').html(
+                        `<h5>Descrição do Atendimento</h5>
+                        <p>${atendimento.descricao || 'Não informado'}</p>`
+                    );
+                }
+
+                // Traz a modal com os dados
                 $('#visualizarAtendimentoModal').modal('show');
-            },
-            error: function(xhr, status, error) {
-                $('#detalhesAtendimento').html(`<p>Erro ao carregar detalhes do atendimento: ${error}</p>`);
-                console.log('Erro ao carregar detalhes do atendimento: ' + error);
-                $('#visualizarAtendimentoModal').modal('show');
+            } else {
+                console.log('Nenhum atendimento encontrado para o ID fornecido.');
             }
-        });
-    }
+        },
+        error: function(xhr, status, error) {
+            console.log('Erro ao carregar detalhes do atendimento: ' + error);
+            if ($('#visualizarAtendimentoModal .modal-body').length) {
+                $('#visualizarAtendimentoModal .modal-body').html(`<p>Erro ao carregar detalhes do atendimento: ${error}</p>`);
+            }
+            $('#visualizarAtendimentoModal').modal('show');
+        }
+    });
+}
+
 </script>
 
 </body>

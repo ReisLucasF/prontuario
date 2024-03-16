@@ -15,7 +15,6 @@ const pacienteSchema = new Schema({
   cidade: { type: String, default: null },
   estado: { type: String, default: null },
   acs: { type: String, default: null },
-  nomeMae: { type: String, default: null },
   alergias: { type: String, default: null },
   comorbidades: { type: String, default: null },
   telefone: { type: String, default: null },

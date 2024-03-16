@@ -25,6 +25,17 @@ router.get('/paciente/:pacienteId', async (req, res) => {
     }
 });
 
+// Listar atendimento específico por id
+router.get('/:atendimentoId', async (req, res) => {
+    const atendimentoId = req.params.atendimentoId;
+    try {
+        const atendimentos = await Atendimento.find({ '_id': atendimentoId });
+        res.json(atendimentos);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Criar um novo atendimento
 router.post('/', async (req, res) => {
   try {

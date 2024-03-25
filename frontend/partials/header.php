@@ -13,6 +13,9 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
+                <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/frontend/fila/">fila</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="http://<?php echo $domain; ?>/prontuario/frontend/estoque/">Estoque</a>
             </li>
             <li class="nav-item">

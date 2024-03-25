@@ -153,6 +153,9 @@ if (!$pacientes || curl_errno($ch)) {
             $.ajax({
                 type: 'POST',
                 url: 'http://localhost:3001/pacientes/criar',
+                headers: {
+                    'x-api-key': '<?php echo $apiKey; ?>'
+                },
                 contentType: 'application/json', // Define o tipo de conteúdo como JSON
                 data: JSON.stringify(jsonData), // Converte os dados para JSON
                 success: function(response) {

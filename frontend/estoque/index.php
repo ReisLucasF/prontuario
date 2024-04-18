@@ -43,15 +43,15 @@ if (!$estoque || curl_errno($ch)) {
 <main>
     <div class="container mt-4">
         <!-- Filtro de texto -->
-        <div class="form-group">
-            <label for="filtroTexto">Filtrar por texto:</label>
-            <input type="text" class="form-control" id="filtroTexto">
-        </div>
-
+        
         <h2>Estoque</h2>
         <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#adicionarMedicamentoModal">
             Adicionar estoque
         </button>
+        <div class="form-group">
+            <label for="filtroTexto">Filtrar por texto:</label>
+            <input type="text" class="form-control" id="filtroTexto">
+        </div>
         <table class="table">
             <thead>
                 <tr>

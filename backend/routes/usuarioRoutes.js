@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Usuario = require('../models/usuario');
 
-// Adicionar múltiplos usuários (para fins de teste)
+// Add multiple users
 router.post('/criar/multiplos', async (req, res) => {
     try {
         const novosUsuarios = req.body;
@@ -13,7 +13,7 @@ router.post('/criar/multiplos', async (req, res) => {
     }
 });
 
-// Adicionar novo usuário
+// Add new user
 router.post('/criar', async (req, res) => {
     try {
       const { cpf, email, crm } = req.body;
@@ -38,7 +38,7 @@ router.post('/criar', async (req, res) => {
     }
 });
 
-// LIST
+// Get all users
 router.get('/', async (req, res) => {
   try {
     const results = await Usuario.find({});
@@ -48,7 +48,22 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Delete
+// Get by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const results = await Usuario.findById(req.params.id);
+    if (!results) {
+      return res.status(404).json({ mensagem: "Usuário não encontrado." });
+    }
+    else{
+      res.json(results);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete by ID
 router.delete('/excluir/:id', async (req, res) => {
   try {
     const result = await Usuario.findByIdAndDelete(req.params.id);

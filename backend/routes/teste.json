@@ -1,0 +1,63 @@
+[
+  {
+    "atendimentoRef": {
+      "AtendimentoId": "65e6123141a3f35eb7f7a64e",
+      "medicoId": {
+        "_id": "65e1f152001443129fc7d082",
+        "nome": "João Silva",
+        "crm": "12345",
+        "email": "joao.silva@example.com",
+        "cpf": "123.456.789-10",
+        "senha": "senha123",
+        "setor": "Cardiologia",
+        "__v": 0
+      },
+      "pacienteId": {
+        "cep": null,
+        "_id": "65f310bac89182504704c5b1",
+        "nome": "Lucas Filipe dos Reis",
+        "nomeDaMae": "Eliete Peixoto dos Reis",
+        "dataNascimento": "2000-02-26T00:00:00.000Z",
+        "sexo": "Masculino",
+        "sus": 12312365470,
+        "pec": "PPA1231",
+        "logradouro": "Avenida Washington Luiz",
+        "bairro": "São Bernardo",
+        "numero": "903",
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "acs": "ADS001",
+        "nomeMae": "Eliete Peixoto dos Reis",
+        "alergias": "Nenhuma",
+        "comorbidades": "Nenhuma",
+        "telefone": "(31) 984548460",
+        "email": "LucasFR@example.com",
+        "etnia": "Branco",
+        "estadoCivil": "Solteiro",
+        "nacionalidade": "Brasileiro",
+        "profissao": "Bancario",
+        "senha": "123456",
+        "__v": 0
+      }
+    },
+    "_id": "65f32aacffb1380c69d57982",
+    "dataInicio": "2024-03-14T00:00:00.000Z",
+    "dataFim": "2024-03-20T00:00:00.000Z",
+    "medicamentos": [
+      {
+        "nome": "ssss",
+        "quantidade": 1,
+        "periodo": "A cada 8 horas",
+        "_id": "65f32aacffb1380c69d57983"
+      },
+      {
+        "nome": "Dipirona",
+        "quantidade": 2,
+        "periodo": "A cada 6 horas",
+        "_id": "65f32aacffb1380c69d57984"
+      }
+    ],
+    "observacoes": "Tomar os medicamentos com água após as refeições.",
+    "__v": 0
+  }
+]

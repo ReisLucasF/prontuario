@@ -1,0 +1,23 @@
+:root {
+    --cor-principal: #AF1717;
+    --cor-secundaria: #ffffff;
+    --cor-fonte: #000000;
+}
+
+.navbar-custom {
+    background-color: var(--cor-principal);
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-nav .nav-link {
+    color: var(--cor-secundaria);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+body {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-fonte);
+}
+
+

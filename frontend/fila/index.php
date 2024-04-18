@@ -33,6 +33,7 @@ if (!$estoque || curl_errno($ch)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fila de Pacientes</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
@@ -69,8 +70,8 @@ if (!$estoque || curl_errno($ch)) {
                 response.forEach(function(paciente) {
                     if (!paciente.validacoes.atendido) {
                         var newRow = $('<tr>');
-                        newRow.append('<td>' + paciente.pacienteId.nome + '</td>');
-                        newRow.append('<td>' + paciente.idade + '</td>');
+                        newRow.append('<td>' + paciente.paciente.nome + '</td>');
+                        newRow.append('<td>' + paciente.paciente.idade + '</td>');
                         newRow.append('<td>' + paciente.tipoAtendimento + '</td>');
                         newRow.append('<td>' + new Date(paciente.dataHoraRecepcao).toLocaleString() + '</td>');
                         newRow.append('<td>' + paciente.profissional.nome + '</td>');
@@ -95,7 +96,7 @@ if (!$estoque || curl_errno($ch)) {
     $(document).on('click', '.chamarBtn', function() {
         var pacienteId = $(this).data('id');
         $.ajax({
-            url: 'http://localhost:3001/fila/editar' + pacienteId,
+            url: 'http://localhost:3001/fila/editar/' + pacienteId,
             method: 'PUT',
             success: function(response) {
                 console.log('Paciente chamado com sucesso');

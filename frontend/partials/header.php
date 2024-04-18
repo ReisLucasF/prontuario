@@ -2,7 +2,9 @@
     $domain = $_SERVER['HTTP_HOST'];
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+<nav class="navbar navbar-custom navbar-expand-lg">
     <a class="navbar-brand" href="http://<?php echo $domain; ?>/prontuario">
         <!-- <img src="seu-logotipo.png" width="30" height="30" class="d-inline-block align-top" alt="Logotipo"> -->
         Logo

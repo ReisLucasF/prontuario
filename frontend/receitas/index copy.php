@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Receitas</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
@@ -44,7 +41,6 @@
 </main>
 
 <script>
-
     document.addEventListener('DOMContentLoaded', () => {
         // Função para carregar os dados da API e popular a tabela
         const carregarDados = async () => {
@@ -52,9 +48,9 @@
                 const response = await fetch('http://localhost:3001/receita');
                 const data = await response.json();
 
-                if (data && data.length > 0) {
-                    const tabelaEstoque = document.getElementById('tabelaEstoque');
+                const tabelaEstoque = document.getElementById('tabelaEstoque');
 
+                if (data && data.length > 0) {
                     data.forEach(receitaAtendimento => {
                         const tr = document.createElement('tr');
 
@@ -77,7 +73,6 @@
                         tabelaEstoque.appendChild(tr);
                     });
                 } else {
-                    const tabelaEstoque = document.getElementById('tabelaEstoque');
                     tabelaEstoque.innerHTML = `
                         <tr>
                             <td colspan="5">Nenhum medicamento encontrado.</td>
@@ -91,72 +86,62 @@
 
         // Chamar a função para carregar os dados
         carregarDados();
-    });
 
+        // Evento click para o botão imprimir
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('imprimirReceitaBtn')) {
+                var receita = JSON.parse(event.target.getAttribute('data-receita'));
+                var receitaTitulo = `Receita${receita._id}${receita.atendimentoRef.pacienteId.nome}`;
 
+                var iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
 
-    // Evento click para o botão imprimir
-    document.addEventListener('click', function(event) {
-        if (event.target.classList.contains('imprimirReceitaBtn')) {
-            var receita = JSON.parse(event.target.getAttribute('data-receita'));
+                iframe.src = 'modelo_impressao.html';
 
-            var iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            document.body.appendChild(iframe);
-
-            // Carrega o conteúdo do iframe antes da impressão
-            iframe.onload = function() {
                 var dataInicio = new Date(receita.dataInicio);
                 var dataFim = new Date(receita.dataFim);
                 var options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
 
-                var html = `
-                    <h2>Detalhes da Receita</h2>
-                    <p><strong>Paciente:</strong> ${receita.atendimentoRef.pacienteId.nome}</p>
-                    <p><strong>Médico:</strong> ${receita.atendimentoRef.medicoId.nome}</p>
-                    <p><strong>Data Início:</strong> ${dataInicio.toLocaleDateString('pt-BR', options)}</p>
-                    <p><strong>Data Fim:</strong> ${dataFim.toLocaleDateString('pt-BR', options)}</p>
-                    <h3>Medicamentos:</h3>
-                    <ul>
-                        ${receita.medicamentos.map(function(medicamento) {
-                            return `<li>${medicamento.nome} | Quantidade: ${medicamento.quantidade} | Período: ${medicamento.periodo}</li>`;
-                        }).join('')}
-                    </ul>
-                    <p><strong>Observações:</strong> ${receita.observacoes}</p>
-                `;
+                iframe.onload = function() {
+                    var html = `
+                        <h2>Detalhes da Receita</h2>
+                        <p><strong>Paciente:</strong> ${receita.atendimentoRef.pacienteId.nome}</p>
+                        <p><strong>Médico:</strong> ${receita.atendimentoRef.medicoId.nome}</p>
+                        <p><strong>Data Início:</strong> ${dataInicio.toLocaleDateString('pt-BR', options)}</p>
+                        <p><strong>Data Fim:</strong> ${dataFim.toLocaleDateString('pt-BR', options)}</p>
+                        <h3>Medicamentos:</h3>
+                        <ul>
+                            ${receita.medicamentos.map(function(medicamento) {
+                                return `<li>${medicamento.nome} | Quantidade: ${medicamento.quantidade} | Período: ${medicamento.periodo}</li>`;
+                            }).join('')}
+                        </ul>
+                        <p><strong>Observações:</strong> ${receita.observacoes}</p>
+                    `;
 
-                var doc = iframe.contentWindow.document;
-                doc.open();
-                doc.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">');
-                doc.write('<link rel="stylesheet" href="style.css">');
-                doc.write(html);
-                doc.close();
+                    var doc = iframe.contentWindow.document;
+                    doc.open();
+                    doc.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">');
+                    doc.write('<link rel="stylesheet" href="style.css">');
+                    doc.write(html);
+                    doc.close();
 
-                // Espera antes da impressão
-                setTimeout(function() {
-                    iframe.contentWindow.print();
-                    // Remove o iframe após a impressão
+                    setTimeout(function() {
+                        iframe.contentWindow.print();
+                    }, 2000); 
+
                     setTimeout(function() {
                         document.body.removeChild(iframe);
-                    }, 2000);
-                }, 1000); 
-            };
-
-            // Define o URL do iframe após a função onload
-            iframe.src = 'modelo_impressao.html';
-        }
+                    }, 20000);
+                };
+            }
+        });
     });
 </script>
-
-
-
-
-
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
 
 </body>
 </html>

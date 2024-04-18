@@ -1,4 +1,6 @@
-
+    <?php
+        include '../partials/header.php';
+    ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,16 +14,14 @@
 <body>
 
 <main>
-    <?php
-        include '../partials/header.php';
-    ?>
+    
     <div class="container mt-4">
         
         <h2>Receita</h2>
+        <!-- Filtro de texto -->
         <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#adicionarMedicamentoModal">
             Adicionar Receita
         </button>
-        <!-- Filtro de texto -->
         <div class="form-group">
             <label for="filtroTexto">Filtrar por texto:</label>
             <input type="text" class="form-control" id="filtroTexto">

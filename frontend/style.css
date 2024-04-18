@@ -18,6 +18,33 @@
 body {
     background-color: var(--cor-secundaria);
     color: var(--cor-fonte);
+    height: 100vh;
 }
 
+section {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    height: 80vh;
+    margin: 0;
+    gap: 15px;
+}
+
+main {
+    margin: 20px 5%;
+}
+
+nav {
+    margin-bottom: 25px;
+    top: 0;
+}
+
+#calendar {
+    margin: 20px 50px;
+    height: 70%;
+}
+
+tbody tr {
+    height: 25px;
+}
 

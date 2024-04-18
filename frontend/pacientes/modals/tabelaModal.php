@@ -1,15 +1,16 @@
 <main>
     <div class="container mt-4">
         <h2>Pacientes</h2>
+        
+        <button type="button" class="btn btn-success  mb-3" data-toggle="modal" data-target="#adicionarPacienteModal">
+            Adicionar Paciente
+        </button>
 
         <div class="form-group">
             <label for="filtroNome">Filtrar por Nome:</label>
             <input type="text" class="form-control" id="filtroNome">
         </div>
 
-        <button type="button" class="btn btn-success  mb-3" data-toggle="modal" data-target="#adicionarPacienteModal">
-            Adicionar Paciente
-        </button>
         <table class="table">
             <thead>
                 <tr>
